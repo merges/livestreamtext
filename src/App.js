@@ -1,25 +1,64 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import FadeIn from 'react-fade-in';
+import React, { useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
-function App() {
+import TextEditable from './TextEditable.js';
+import TextItem from './TextItem.js';
+
+function App () {
+  const [album, setAlbum] = useState('Temporary Thrillz'); 
+  const [artist, setArtist] = useState('Space Dimension Controller'); 
+  const [song, setSong] = useState(null);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/control" render={() => (
+          <main style={{ padding: 60 }}>
+            <TextEditable
+              placeholder="Artist"
+              style={{
+                display: 'block',
+                fontWeight: 800,
+                fontSize: '2rem',
+                textTransform: 'uppercase'
+              }}
+              text={artist}
+            />
+            <TextEditable
+              placeholder="Album"
+              style={{
+                display: 'block',
+                fontWeight: 800,
+                fontSize: '1.5rem',
+                textTransform: 'uppercase'
+              }}
+              text={album}
+            />
+          </main>
+        )} />
+        <Route exact path="/" render={() => (
+          <main className="fill">
+            <div className="absolute" style={{ bottom: 60, left: 60 }}>
+              <FadeIn>
+                <TextItem
+                  style={{ color: 'white', fontSize: '3rem' }}
+                  text={artist}
+                />
+                <TextItem
+                  style={{ color: 'white', fontSize: '2.5rem' }}
+                  text={album}
+                />
+              </FadeIn>
+            </div>
+          </main>
+        )} />
+      </Switch>
+    </Router>
   );
 }
 
